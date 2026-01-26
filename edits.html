@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/logo.jpeg">
+    <title>Edits - DNA Coded</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        .page-content {
+            padding: 8rem 2rem 4rem;
+            min-height: 80vh;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .videos-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+            /* Increased gap */
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .video-item {
+            border: 1px solid rgba(188, 19, 254, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            /* Reduced specific size */
+            transition: transform 0.3s ease;
+            position: relative;
+            /* For overlay */
+            cursor: pointer;
+        }
+
+        .video-item:hover {
+            transform: scale(1.05);
+        }
+
+        .video-item video {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 4rem;
+            padding: 1rem 3rem;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .video-item {
+                padding: 1rem;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-overlay"></div>
+
+    <div class="page-content">
+        <h1 class="section-title">TEAM EDITS</h1>
+        <p style="color: #aaa; margin-bottom: 3rem;">Creative Videos and Showcases</p>
+
+        <div class="videos-grid">
+            <div class="video-item" onclick="openModal('./img/teamintro.mp4', 'video')">
+                <video style="width: 100%; border-radius: 5px; margin-bottom: 1rem; pointer-events: none;">
+                    <source src="./img/teamintro.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div
+                    style="position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); font-size: 3rem; color: #fff; text-shadow: 0 0 10px #000;">
+                    &#9658;</div>
+                <h3 style="color: var(--neon-purple);">Team Intro</h3>
+                <p style="color: #ddd;">Introducing the DNA Coded team.</p>
+            </div>
+            <div class="video-item" onclick="openModal('./img/techno.mp4', 'video')">
+                <video style="width: 100%; border-radius: 5px; margin-bottom: 1rem; pointer-events: none;">
+                    <source src="./img/techno.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div
+                    style="position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); font-size: 3rem; color: #fff; text-shadow: 0 0 10px #000;">
+                    &#9658;</div>
+                <h3 style="color: var(--neon-purple);">Techno Visit</h3>
+                <p style="color: #ddd;">A glimpse of our visit and win at the Techno Mains Saltlake.</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-btn">Back to Home</a>
+    </div>
+
+    <!-- Modal -->
+    <div id="mediaModal" class="modal-overlay" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg" style="display:none;">
+        <video class="modal-content" id="modalVideo" controls style="display:none;"></video>
+    </div>
+
+    <script>
+        function openModal(src, type) {
+            const modal = document.getElementById('mediaModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalVideo = document.getElementById('modalVideo');
+
+            modal.style.display = "flex";
+
+            if (type === 'img') {
+                modalImg.src = src;
+                modalImg.style.display = "block";
+                modalVideo.style.display = "none";
+                modalVideo.pause();
+            } else {
+                modalVideo.src = src;
+                modalVideo.style.display = "block";
+                modalImg.style.display = "none";
+                modalVideo.play();
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('mediaModal');
+            const modalVideo = document.getElementById('modalVideo');
+            modal.style.display = "none";
+            modalVideo.pause();
+            modalVideo.src = "";
+        }
+    </script>
+</body>
+
+</html>

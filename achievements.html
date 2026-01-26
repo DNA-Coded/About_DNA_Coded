@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/logo.jpeg">
+    <title>Achievements - DNA Coded</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        .page-content {
+            padding: 8rem 2rem 4rem;
+            min-height: 80vh;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .gallery-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+            /* Increased gap/margin between items */
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 300px;
+            /* Reduced specific size */
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 4rem;
+            padding: 1rem 3rem;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .gallery-item {
+                padding: 1rem;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-overlay"></div>
+
+    <div class="page-content">
+        <h1 class="section-title">TEAM ACHIEVEMENTS</h1>
+        <p style="color: #aaa; margin-bottom: 3rem;">Certificates and Recognition</p>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="./img/cert1.jpg" alt="Certificate 1" onclick="openModal(this.src, 'img')"
+                    style="cursor: pointer;">
+                <h3 style="color: var(--neon-purple);">3rd Place in Hackathon</h3>
+                <p style="color: #ddd;">Certificate of recognition for the team int the very first year of our college life.</p>
+            </div>
+            <!-- Add more certificates here as needed -->
+        </div>
+
+        <a href="index.html" class="back-btn">Back to Home</a>
+    </div>
+
+    <!-- Modal -->
+    <div id="mediaModal" class="modal-overlay" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg" style="display:none;">
+        <video class="modal-content" id="modalVideo" controls style="display:none;"></video>
+    </div>
+
+    <script>
+        function openModal(src, type) {
+            const modal = document.getElementById('mediaModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalVideo = document.getElementById('modalVideo');
+
+            modal.style.display = "flex";
+
+            if (type === 'img') {
+                modalImg.src = src;
+                modalImg.style.display = "block";
+                modalVideo.style.display = "none";
+                modalVideo.pause();
+            } else {
+                modalVideo.src = src;
+                modalVideo.style.display = "block";
+                modalImg.style.display = "none";
+                modalVideo.play();
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('mediaModal');
+            const modalVideo = document.getElementById('modalVideo');
+            modal.style.display = "none";
+            modalVideo.pause();
+            modalVideo.src = ""; // Stop buffering
+        }
+    </script>
+</body>
+
+</html>
