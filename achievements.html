@@ -85,6 +85,34 @@
                 max-width: 100%;
             }
         }
+
+        .nav-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 2.5rem;
+            border: 1px solid var(--neon-cyan);
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: 0.3s;
+            user-select: none;
+        }
+
+        .nav-control:hover {
+            background: var(--neon-cyan);
+            color: black;
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
     </style>
 </head>
 
@@ -98,29 +126,32 @@
 
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="./img/cert1.jpg" alt="Certificate 1" onclick="openModal(this.src, 'img')"
-                    style="cursor: pointer;">
+                <img src="./img/cert1.jpg" alt="Certificate 1" onclick="openModal(0)" style="cursor: pointer;">
                 <h3 style="color: var(--neon-purple);">3rd Place in a online Hackathon </h3>
                 <p style="color: #ddd;">Certificate of recognition the team. <br> In the very first year of our college
                     life.</p>
             </div>
             <div class="gallery-item">
-                <img src="./img/cert2.jpeg" alt="Certificate 2" onclick="openModal(this.src, 'img')"
-                    style="cursor: pointer;">
+                <img src="./img/cert2.jpeg" alt="Certificate 2" onclick="openModal(1)" style="cursor: pointer;">
                 <h3 style="color: var(--neon-purple);">3rd Place in a online Hackathon (DEVPOST) </h3>
                 <p style="color: #ddd;"> <br> For the best ai/ml based project and Acuring 3rd position.</p>
             </div>
             <div class="gallery-item">
-                <img src="./img/cert3.jpeg" alt="Certificate 3" onclick="openModal(this.src, 'img')"
-                    style="cursor: pointer;">
+                <img src="./img/cert3.jpeg" alt="Certificate 3" onclick="openModal(2)" style="cursor: pointer;">
                 <h3 style="color: var(--neon-purple);"> 1st Place in a online Hackathon (DEVPOST)</h3>
                 <p style="color: #ddd;"> <br> Apriciated by a linked-in post by the organiser </p>
             </div>
             <div class="gallery-item">
-                <img src="./img/cert4.jpeg" alt="Certificate 4" onclick="openModal(this.src, 'img')"
-                    style="cursor: pointer;">
+                <img src="./img/cert4.jpeg" alt="Certificate 4" onclick="openModal(3)" style="cursor: pointer;">
                 <h3 style="color: var(--neon-purple);"> 1st Place in a online Hackathon (DEVPOST)</h3>
                 <p style="color: #ddd;"> <br> </p>
+            </div>
+            <div class="gallery-item">
+                <img src="./img/hackonit.jpeg" alt="Certificate 4" onclick="openModal(4)" style="cursor: pointer;">
+                <h3 style="color: var(--neon-purple);"> Qualified for Hack-o-NiT in the very first year of our college
+                    life</h3>
+                <p style="color: #ddd;">Out of 260+teams we were the only 1st year team from our college to qualify for
+                    the hackathon. <br> </p>
             </div>
             <!-- Add more certificates here as needed -->
         </div>
@@ -129,31 +160,55 @@
     </div>
 
     <!-- Modal -->
-    <div id="mediaModal" class="modal-overlay" onclick="closeModal()">
-        <span class="close-modal">&times;</span>
+    <div id="mediaModal" class="modal-overlay">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="nav-control prev-btn" onclick="prevMedia()">&#10094;</div>
         <img class="modal-content" id="modalImg" style="display:none;">
         <video class="modal-content" id="modalVideo" controls style="display:none;"></video>
+        <div class="nav-control next-btn" onclick="nextMedia()">&#10095;</div>
     </div>
 
     <script>
-        function openModal(src, type) {
-            const modal = document.getElementById('mediaModal');
+        const mediaList = [
+            { src: './img/cert1.jpg', type: 'img' },
+            { src: './img/cert2.jpeg', type: 'img' },
+            { src: './img/cert3.jpeg', type: 'img' },
+            { src: './img/cert4.jpeg', type: 'img' }
+        ];
+        let currentIndex = 0;
+
+        function openModal(index) {
+            currentIndex = index;
+            updateModalContent();
+            document.getElementById('mediaModal').style.display = "flex";
+        }
+
+        function updateModalContent() {
+            const item = mediaList[currentIndex];
             const modalImg = document.getElementById('modalImg');
             const modalVideo = document.getElementById('modalVideo');
 
-            modal.style.display = "flex";
-
-            if (type === 'img') {
-                modalImg.src = src;
+            if (item.type === 'img') {
+                modalImg.src = item.src;
                 modalImg.style.display = "block";
                 modalVideo.style.display = "none";
                 modalVideo.pause();
             } else {
-                modalVideo.src = src;
+                modalVideo.src = item.src;
                 modalVideo.style.display = "block";
                 modalImg.style.display = "none";
                 modalVideo.play();
             }
+        }
+
+        function nextMedia() {
+            currentIndex = (currentIndex + 1) % mediaList.length;
+            updateModalContent();
+        }
+
+        function prevMedia() {
+            currentIndex = (currentIndex - 1 + mediaList.length) % mediaList.length;
+            updateModalContent();
         }
 
         function closeModal() {
@@ -163,6 +218,13 @@
             modalVideo.pause();
             modalVideo.src = ""; // Stop buffering
         }
+
+        // Close modal when clicking outside content
+        document.getElementById('mediaModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 
